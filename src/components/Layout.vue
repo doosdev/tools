@@ -1,14 +1,48 @@
 <template>
   <div class="layout-container" :class="{ 'mobile': isMobile }">
-    <!-- 모바일 메뉴 토글 버튼 -->
-    <div v-if="isMobile" class="mobile-menu-toggle">
-      <el-button @click="toggleSidebar" type="primary" size="large">
-        <i class="bx bx-menu"></i>
-      </el-button>
+    <!-- 모바일 헤더 툴바 -->
+    <div v-if="isMobile" class="mobile-header">
+      <div class="mobile-header-content">
+        <div class="mobile-header-left">
+          <el-button
+            v-if="!isMobileMenuOpen"
+            @click="toggleSidebar"
+            type="link"
+            class="mobile-menu-btn"
+          >
+            <i class="bx bx-menu"></i>
+          </el-button>
+          <!-- 모바일 닫기 버튼 -->
+          <el-button
+            v-if="isMobileMenuOpen"
+            @click="closeSidebar"
+            type="text"
+            class="mobile-menu-btn"
+          >
+            <i class="bx bx-x"></i>
+          </el-button>
+        </div>
+        <div class="mobile-header-center">
+          <h1 class="mobile-header-title">
+            <i class="bx bx-toolbox"></i>
+            Dev. Toolbox
+          </h1>
+        </div>
+        <div class="mobile-header-right">
+          <div class="mobile-header-right-item">
+            <el-button
+              type="link"
+              class="mobile-menu-btn"
+            >
+              <i class="bx bx-search" :style="{ opacity: 0 }"></i>
+            </el-button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- 사이드바 -->
-    <Sidebar ref="sidebarRef" :home-view-ref="homeViewRef" />
+    <Sidebar ref="sidebarRef" :home-view-ref="props.homeViewRef" @close-mobile-menu="closeSidebar" />
 
     <!-- 메인 컨텐츠 영역 -->
     <div class="main-content" :class="{ 'with-sidebar': !isMobile }">
@@ -25,16 +59,20 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, provide } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Sidebar from './Sidebar.vue'
 
+// props 정의
+const props = defineProps({
+  homeViewRef: {
+    type: Object,
+    default: null
+  }
+})
+
 const sidebarRef = ref(null)
-const homeViewRef = ref(null)
 const isMobile = ref(false)
 const isMobileMenuOpen = ref(false)
-
-// HomeView 참조를 전역으로 제공
-provide('homeViewRef', homeViewRef)
 
 // 반응형 체크
 const checkResponsive = () => {
@@ -80,12 +118,62 @@ onUnmounted(() => {
   flex-direction: column;
 }
 
-/* 모바일 메뉴 토글 */
-.mobile-menu-toggle {
+/* 모바일 헤더 툴바 */
+.mobile-header {
   position: fixed;
-  top: 16px;
-  left: 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45px;
+  background: white;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 1001;
+}
+
+.mobile-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0 16px;
+}
+
+.mobile-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-header-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.mobile-header-right {
+  display: flex;
+  align-items: center;
+}
+
+.mobile-menu-btn {
+  font-size: 1.5rem;
+  padding: 6px;
+  border: 0px;
+}
+.mobile-menu-btn i {
+    margin-right: 0px;
+}
+
+
+.mobile-header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* 메인 컨텐츠 영역 */
@@ -114,7 +202,7 @@ onUnmounted(() => {
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
-    padding-top: 80px;
+    padding-top: 64px;
   }
 }
 </style>

@@ -2,11 +2,9 @@
   <div class="sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
     <div class="sidebar-header">
       <h2 class="sidebar-title">
-        <i class="bx bx-toolbox"></i>
-        카테고리
+        Dev. Toolbox
       </h2>
     </div>
-
     <div class="category-list">
       <div
         v-for="category in toolCategories"
@@ -37,6 +35,9 @@ const props = defineProps({
     default: null
   }
 })
+
+// emit 정의
+const emit = defineEmits(['close-mobile-menu'])
 
 // 카테고리별로 그룹핑된 도구들
 const toolCategories = [
@@ -154,6 +155,8 @@ const selectCategory = (categoryId) => {
   // 모바일에서는 카테고리 클릭 시 메뉴 닫기
   if (isMobile.value) {
     isMobileMenuOpen.value = false
+    // 부모 컴포넌트에 닫기 이벤트 전달
+    emit('close-mobile-menu')
   }
 }
 
@@ -201,6 +204,13 @@ const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
 }
 
+// 모바일 메뉴 닫기
+const closeMobileMenu = () => {
+  isMobileMenuOpen.value = false
+  // 부모 컴포넌트에 닫기 이벤트 전달
+  emit('close-mobile-menu')
+}
+
 // 컴포넌트 마운트 시 반응형 체크 및 활성 카테고리 설정
 onMounted(() => {
   checkResponsive()
@@ -235,11 +245,15 @@ defineExpose({
   height: 100vh;
   z-index: 1000;
   overflow-y: auto;
+  padding: 0.5rem;
 }
 
 .sidebar-header {
   padding: 24px 24px 16px;
   border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .sidebar-title {
@@ -250,6 +264,20 @@ defineExpose({
   display: flex;
   align-items: center;
   gap: 8px;
+  flex: 1;
+}
+
+.mobile-close-btn {
+  color: #64748b;
+  font-size: 1.5rem;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.mobile-close-btn:hover {
+  color: #1e293b;
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .category-list {
@@ -265,6 +293,7 @@ defineExpose({
   position: relative;
   gap: 12px;
   min-height: 48px;
+  border-radius: 5px;
 }
 
 .category-item:hover {
@@ -303,12 +332,11 @@ defineExpose({
 }
 
 .tool-count {
-  background: rgba(255, 255, 255, 0.2);
-  color: inherit;
-  padding: 2px 6px;
+  background: rgb(255 255 255 / 71%);
+  color: #6f5c5c;
   border-radius: 10px;
-  font-size: 0.7rem;
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: bolder;
   width: 40px;
   text-align: center;
   flex-shrink: 0;
@@ -323,6 +351,8 @@ defineExpose({
   .sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+    top: 45px; /* 헤더 높이만큼 아래로 */
+    height: calc(100vh - 45px); /* 헤더 높이만큼 높이 조정 */
   }
 }
 </style>
