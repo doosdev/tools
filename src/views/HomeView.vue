@@ -36,7 +36,7 @@ const tools = [
   {
     name: 'Diff Checker',
     desc: '두 텍스트/코드의 차이 비교',
-    icon: 'bx-diff',
+    icon: 'bx-candles',
     route: '/diff-checker',
   },
   {
