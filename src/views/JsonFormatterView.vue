@@ -35,8 +35,8 @@
             <h3>결과</h3>
             <div class="view-toggle">
               <el-radio-group v-model="viewMode" size="small">
-                <el-radio-button label="tree">트리 뷰</el-radio-button>
-                <el-radio-button label="text">텍스트</el-radio-button>
+                <el-radio-button value="tree">트리 뷰</el-radio-button>
+                <el-radio-button value="text">텍스트</el-radio-button>
               </el-radio-group>
             </div>
             <div class="result-container">

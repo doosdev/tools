@@ -5,7 +5,7 @@ const router = useRouter()
 const tools = [
   {
     name: 'JSON Formatter',
-    desc: 'JSON 데이터를 보기 좋게 정렬/검증',
+    desc: 'JSON 데이터를 정렬/검증',
     icon: 'bx-code-block',
     route: '/json-formatter',
   },
@@ -55,7 +55,7 @@ const goToTool = (route) => {
 <template>
   <div class="toolbox-main">
     <h1 class="main-title">개발자 유틸리티 툴박스</h1>
-    <el-row :gutter="24" justify="center">
+    <el-row :gutter="24" justify="center" :style="{ gap: '1rem 0' }">
       <el-col
         v-for="tool in tools"
         :key="tool.name"
