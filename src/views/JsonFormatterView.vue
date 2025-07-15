@@ -15,9 +15,10 @@
             <el-input
               v-model="inputJson"
               type="textarea"
-              :rows="15"
+              :rows="26"
               placeholder="JSON 데이터를 입력하세요..."
               @input="formatJson"
+              :style="{ fontSize: '12px', lineHeight: '16px' }"
             />
             <div class="action-buttons">
               <el-button type="primary" @click="formatJson">
@@ -287,7 +288,8 @@ const collapseAll = () => {
   margin: 0;
   white-space: pre-wrap;
   word-wrap: break-word;
-  line-height: 15px;
+  line-height: 16px;
+  font-size: 12px;
 }
 
 .placeholder {

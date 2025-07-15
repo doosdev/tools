@@ -93,14 +93,15 @@ const goToTool = (route) => {
 }
 .tool-card {
   cursor: pointer;
-  border-radius: 18px;
-  transition: transform 0.18s, box-shadow 0.18s;
-  min-height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f8fafc 60%, #e0e7ef 100%);
-  box-shadow: 0 2px 16px 0 rgba(60,60,60,0.07);
+    border-radius: 14px;
+    transition: transform 0.18s, box-shadow 0.18s;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8fafc 60%, #e0e7ef 100%);
+    box-shadow: 0 2px 16px 0 rgba(60, 60, 60, 0.07);
+    border: 3px solid #c3c3c3;
 }
 .tool-card:hover {
   transform: translateY(-6px) scale(1.03);
