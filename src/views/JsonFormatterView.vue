@@ -23,6 +23,9 @@
               <el-button type="primary" @click="formatJson">
                 <i class="bx bx-code-block"></i> 포맷팅
               </el-button>
+              <el-button type="success" @click="formatJsonWithDecode">
+                <i class="bx bx-link"></i> 포맷팅 + URL 디코딩
+              </el-button>
               <el-button @click="clearInput">
                 <i class="bx bx-trash"></i> 지우기
               </el-button>
@@ -32,32 +35,62 @@
         
         <el-col :span="12">
           <div class="output-section">
-            <h3>결과</h3>
+            <h3>결과
+                <div class="validation-status">
+                    <el-tag v-if="isValid" type="success">
+                        <i class="bx bx-check"></i> 유효한 JSON
+                    </el-tag>
+                    <el-tag v-else-if="inputJson" type="danger">
+                        <i class="bx bx-x"></i> 유효하지 않은 JSON
+                    </el-tag>
+                </div> 
+            </h3>
             <div class="view-toggle">
               <el-radio-group v-model="viewMode" size="small">
                 <el-radio-button value="tree">트리 뷰</el-radio-button>
                 <el-radio-button value="text">텍스트</el-radio-button>
               </el-radio-group>
-            </div>
+              <div class="copy-section">
+                <el-button 
+                    v-if="viewMode === 'tree' && parsedData" 
+                    @click="expandAll" 
+                    type="warning"
+                    size="small"
+                >
+                    <i class="bx bx-expand-alt"></i> 전체 펼치기
+                </el-button>
+                <el-button 
+                    v-if="viewMode === 'tree' && parsedData" 
+                    @click="collapseAll" 
+                    type="warning"
+                    size="small"
+                >
+                    <i class="bx bx-collapse-alt"></i> 전체 접기
+                </el-button>
+                <el-button 
+                    v-if="formattedJson || (viewMode === 'tree' && parsedData)" 
+                    @click="copyResult" 
+                    type="info"
+                    size="small"
+                >
+                    <i class="bx bx-copy"></i> 결과 복사
+                </el-button>
+                </div>
+            </div> 
+            
             <div class="result-container">
               <div v-if="viewMode === 'tree' && parsedData" class="json-tree">
                 <JsonTreeNode 
                   :data="parsedData" 
                   :name="'root'"
                   :level="0"
+                  :global-expanded="globalExpanded"
                 />
               </div>
               <pre v-else-if="formattedJson" class="formatted-json">{{ formattedJson }}</pre>
               <div v-else class="placeholder">포맷팅된 JSON이 여기에 표시됩니다.</div>
             </div>
-            <div class="validation-status">
-              <el-tag v-if="isValid" type="success">
-                <i class="bx bx-check"></i> 유효한 JSON
-              </el-tag>
-              <el-tag v-else-if="inputJson" type="danger">
-                <i class="bx bx-x"></i> 유효하지 않은 JSON
-              </el-tag>
-            </div>
+            
           </div>
         </el-col>
       </el-row>
@@ -67,6 +100,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { ElMessage } from 'element-plus'
 import JsonTreeNode from '../components/JsonTreeNode.vue'
 
 const inputJson = ref('')
@@ -74,6 +108,7 @@ const formattedJson = ref('')
 const isValid = ref(false)
 const parsedData = ref(null)
 const viewMode = ref('tree')
+const globalExpanded = ref(true) // 전체 펼치기/접기 상태를 저장할 참조
 
 const formatJson = () => {
   if (!inputJson.value.trim()) {
@@ -95,11 +130,84 @@ const formatJson = () => {
   }
 }
 
+const formatJsonWithDecode = () => {
+  if (!inputJson.value.trim()) {
+    formattedJson.value = ''
+    isValid.value = false
+    parsedData.value = null
+    return
+  }
+  
+  try {
+    const parsed = JSON.parse(inputJson.value)
+    const decoded = decodeUrlInObject(parsed)
+    formattedJson.value = JSON.stringify(decoded, null, 2)
+    parsedData.value = decoded
+    isValid.value = true
+  } catch (error) {
+    formattedJson.value = `Error: ${error.message}`
+    isValid.value = false
+    parsedData.value = null
+  }
+}
+
+const decodeUrlInObject = (obj) => {
+  if (typeof obj === 'string') {
+    // 문자열이 URL 인코딩된 것인지 확인하고 디코딩
+    try {
+      if (obj.includes('%')) {
+        return decodeURIComponent(obj)
+      }
+      return obj
+    } catch {
+      return obj
+    }
+  } else if (Array.isArray(obj)) {
+    return obj.map(item => decodeUrlInObject(item))
+  } else if (obj !== null && typeof obj === 'object') {
+    const decoded = {}
+    for (const [key, value] of Object.entries(obj)) {
+      decoded[key] = decodeUrlInObject(value)
+    }
+    return decoded
+  }
+  return obj
+}
+
 const clearInput = () => {
   inputJson.value = ''
   formattedJson.value = ''
   isValid.value = false
   parsedData.value = null
+}
+
+const copyResult = async () => {
+  try {
+    let textToCopy = ''
+    
+    if (viewMode.value === 'tree' && parsedData.value) {
+      // 트리 뷰 모드일 때는 포맷팅된 JSON 텍스트로 복사
+      textToCopy = JSON.stringify(parsedData.value, null, 2)
+    } else if (formattedJson.value) {
+      // 텍스트 뷰 모드일 때는 포맷팅된 JSON 그대로 복사
+      textToCopy = formattedJson.value
+    }
+    
+    if (textToCopy) {
+      await navigator.clipboard.writeText(textToCopy)
+      ElMessage.success('결과가 클립보드에 복사되었습니다.')
+    }
+  } catch (error) {
+    ElMessage.error('복사에 실패했습니다.')
+  }
+}
+
+const expandAll = () => {
+  globalExpanded.value = true
+}
+
+const collapseAll = () => {
+  globalExpanded.value = false
 }
 </script>
 
@@ -143,10 +251,14 @@ const clearInput = () => {
   font-size: 1.2rem;
   font-weight: 600;
   color: #333;
+  display: flex;
+  justify-content: space-between; 
 }
 
-.view-toggle {
-  margin-bottom: 15px;
+.view-toggle { 
+    justify-content: space-between;
+    display: flex;
+    margin-bottom: 15px;
 }
 
 .action-buttons {
@@ -184,8 +296,13 @@ const clearInput = () => {
   padding: 50px 0;
 }
 
-.validation-status {
-  margin-top: 15px;
+.copy-section { 
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.validation-status { 
 }
 
 @media (max-width: 768px) {

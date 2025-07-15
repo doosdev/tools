@@ -28,6 +28,7 @@
           :data="item"
           :name="index.toString()"
           :level="level + 1"
+          :global-expanded="globalExpanded"
         />
       </template>
       <template v-else>
@@ -37,6 +38,7 @@
           :data="value"
           :name="key"
           :level="level + 1"
+          :global-expanded="globalExpanded"
         />
       </template>
     </div>
@@ -44,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const props = defineProps({
   data: {
@@ -58,18 +60,32 @@ const props = defineProps({
   level: {
     type: Number,
     default: 0
+  },
+  globalExpanded: {
+    type: Boolean,
+    default: null
   }
 })
 
 const expanded = ref(true)
+const localExpanded = ref(true) // 개별 노드의 로컬 상태
 
 const hasChildren = computed(() => {
   return typeof props.data === 'object' && props.data !== null
 })
 
+// globalExpanded prop이 변경될 때만 모든 노드의 expanded 상태를 동기화
+watch(() => props.globalExpanded, (newValue) => {
+  if (newValue !== null) {
+    expanded.value = newValue
+    localExpanded.value = newValue
+  }
+}, { immediate: true })
+
 const toggleExpanded = () => {
   if (hasChildren.value) {
-    expanded.value = !expanded.value
+    localExpanded.value = !localExpanded.value
+    expanded.value = localExpanded.value
   }
 }
 
