@@ -24,8 +24,20 @@
               <el-button type="primary" @click="formatJson">
                 <i class="bx bx-code-block"></i> 포맷팅
               </el-button>
+              <el-dropdown @command="handleCommand" trigger="click">
+                <el-button type="warning">
+                  <i class="bx bx-compress-alt"></i> 미니멀라이즈
+                  <i class="bx bx-chevron-down"></i>
+                </el-button>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item command="minify">결과만 보기</el-dropdown-item>
+                    <el-dropdown-item command="minify-replace">입력 필드에 적용</el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
               <el-button type="success" @click="formatJsonWithDecode">
-                <i class="bx bx-link"></i> 포맷팅 + URL 디코딩
+                <i class="bx bx-link"></i> URL 디코딩
               </el-button>
               <el-button @click="clearInput">
                 <i class="bx bx-trash"></i> 지우기
@@ -152,6 +164,46 @@ const formatJsonWithDecode = () => {
   }
 }
 
+const minifyJson = () => {
+  if (!inputJson.value.trim()) {
+    ElMessage.warning('JSON 데이터가 비어있습니다.')
+    return
+  }
+
+  try {
+    const parsed = JSON.parse(inputJson.value)
+    const minified = JSON.stringify(parsed)
+    formattedJson.value = minified
+    parsedData.value = parsed
+    isValid.value = true
+    ElMessage.success('JSON 데이터가 미니멀라이즈되었습니다.')
+  } catch (error) {
+    formattedJson.value = `Error: ${error.message}`
+    isValid.value = false
+    parsedData.value = null
+    ElMessage.error('JSON 데이터를 미니멀라이즈할 수 없습니다.')
+  }
+}
+
+const minifyAndReplace = () => {
+  if (!inputJson.value.trim()) {
+    ElMessage.warning('JSON 데이터가 비어있습니다.')
+    return
+  }
+
+  try {
+    const parsed = JSON.parse(inputJson.value)
+    const minified = JSON.stringify(parsed)
+    inputJson.value = minified
+    formattedJson.value = minified
+    parsedData.value = parsed
+    isValid.value = true
+    ElMessage.success('JSON 데이터가 미니멀라이즈되어 입력 필드에 적용되었습니다.')
+  } catch (error) {
+    ElMessage.error('JSON 데이터를 미니멀라이즈할 수 없습니다.')
+  }
+}
+
 const decodeUrlInObject = (obj) => {
   if (typeof obj === 'string') {
     // 문자열이 URL 인코딩된 것인지 확인하고 디코딩
@@ -210,6 +262,14 @@ const expandAll = () => {
 const collapseAll = () => {
   globalExpanded.value = false
 }
+
+const handleCommand = (command) => {
+  if (command === 'minify') {
+    minifyJson()
+  } else if (command === 'minify-replace') {
+    minifyAndReplace()
+  }
+}
 </script>
 
 <style scoped>
@@ -265,7 +325,13 @@ const collapseAll = () => {
 .action-buttons {
   margin-top: 15px;
   display: flex;
-  gap: 10px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-buttons .el-button {
+  flex: 1;
+  min-width: 120px;
 }
 
 .result-container {
