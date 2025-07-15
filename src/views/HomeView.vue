@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -78,245 +78,123 @@ const toolCategories = [
   }
 ]
 
-const activeCategory = ref('data-processing')
-const isMobile = ref(false)
-const isMobileMenuOpen = ref(false)
-
-// 반응형 체크
-const checkResponsive = () => {
-  isMobile.value = window.innerWidth < 768
-}
-
-// 카테고리 클릭 핸들러
-const selectCategory = (categoryId) => {
-  activeCategory.value = categoryId
-  scrollToCategory(categoryId)
-}
-
-// 카테고리로 스크롤
-const scrollToCategory = (categoryId) => {
-  const element = document.getElementById(`category-${categoryId}`)
-  if (element) {
-    element.scrollIntoView({ 
-      behavior: 'smooth', 
-      block: 'start' 
-    })
-  }
-}
-
 // 도구 클릭 핸들러
 const goToTool = (route) => {
   router.push(route)
 }
 
-// 컴포넌트 마운트 시 반응형 체크
+// 하이라이트 관련 상태
+const highlightedCategory = ref(null)
+const highlightTimeout = ref(null)
+
+// 하이라이트 효과 적용
+const highlightCategory = (categoryId) => {
+  // 기존 하이라이트 제거
+  if (highlightedCategory.value) {
+    const prevElement = document.getElementById(`category-${highlightedCategory.value}`)
+    if (prevElement) {
+      prevElement.classList.remove('highlighted')
+    }
+  }
+
+  // 새로운 하이라이트 적용
+  highlightedCategory.value = categoryId
+  const element = document.getElementById(`category-${categoryId}`)
+  if (element) {
+    element.classList.add('highlighted')
+
+    // 애니메이션 완료 후 클래스 제거 (1.5초)
+    if (highlightTimeout.value) {
+      clearTimeout(highlightTimeout.value)
+    }
+    highlightTimeout.value = setTimeout(() => {
+      element.classList.remove('highlighted')
+      highlightedCategory.value = null
+    }, 1500)
+  }
+}
+
+// URL 파라미터에서 카테고리 확인
+const checkUrlForCategory = () => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const category = urlParams.get('category')
+  if (category) {
+    // URL 파라미터 제거
+    window.history.replaceState({}, document.title, window.location.pathname)
+    // 하이라이트 적용
+    setTimeout(() => {
+      highlightCategory(category)
+    }, 100)
+  }
+}
+
+// 컴포넌트 마운트 시 URL 파라미터 확인
 onMounted(() => {
-  checkResponsive()
-  window.addEventListener('resize', checkResponsive)
+  checkUrlForCategory()
 })
 
-// 컴포넌트 언마운트 시 이벤트 리스너 제거
+// 컴포넌트 언마운트 시 타이머 정리
 onUnmounted(() => {
-  window.removeEventListener('resize', checkResponsive)
+  if (highlightTimeout.value) {
+    clearTimeout(highlightTimeout.value)
+  }
+})
+
+// 전역으로 하이라이트 함수 노출 (Sidebar에서 사용)
+defineExpose({
+  highlightCategory
 })
 </script>
 
 <template>
-  <div class="toolbox-container" :class="{ 'mobile': isMobile }">
-    <!-- 모바일 메뉴 토글 버튼 -->
-    <div v-if="isMobile" class="mobile-menu-toggle">
-      <el-button @click="isMobileMenuOpen = !isMobileMenuOpen" type="primary" size="large">
-        <i class="bx bx-menu"></i>
-      </el-button>
+  <div class="home-container">
+    <div class="content-header">
+      <h1 class="main-title">개발자 유틸리티 툴박스</h1>
+      <p class="subtitle">개발에 필요한 다양한 도구들을 카테고리별로 정리했습니다</p>
     </div>
 
-    <!-- 좌측 사이드바 -->
-    <div class="sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
-      <div class="sidebar-header">
-        <h2 class="sidebar-title">
-          <i class="bx bx-toolbox"></i>
-          카테고리
-        </h2>
-      </div>
-      
-      <div class="category-list">
-        <div
-          v-for="category in toolCategories"
-          :key="category.id"
-          class="category-item"
-          :class="{ 'active': activeCategory === category.id }"
-          @click="selectCategory(category.id)"
-        >
-          <i :class="`bx ${category.icon}`"></i>
-          <span>{{ category.name }}</span>
-          <span class="tool-count">{{ category.tools.length }}</span>
+    <div class="categories-content">
+      <div
+        v-for="category in toolCategories"
+        :key="category.id"
+        :id="`category-${category.id}`"
+        class="category-section"
+      >
+        <div class="category-header">
+          <h2 class="category-title">
+            <i :class="`bx ${category.icon}`"></i>
+            {{ category.name }}
+          </h2>
+          <p class="category-desc">{{ category.tools.length }}개의 도구</p>
         </div>
-      </div>
-    </div>
 
-    <!-- 우측 컨텐츠 영역 -->
-    <div class="content-area">
-      <div class="content-header">
-        <h1 class="main-title">개발자 유틸리티 툴박스</h1>
-        <p class="subtitle">개발에 필요한 다양한 도구들을 카테고리별로 정리했습니다</p>
-      </div>
-
-      <div class="categories-content">
-        <div
-          v-for="category in toolCategories"
-          :key="category.id"
-          :id="`category-${category.id}`"
-          class="category-section"
-        >
-          <div class="category-header">
-            <h2 class="category-title">
-              <i :class="`bx ${category.icon}`"></i>
-              {{ category.name }}
-            </h2>
-            <p class="category-desc">{{ category.tools.length }}개의 도구</p>
-          </div>
-
-          <div class="tools-grid">
-            <div
-              v-for="tool in category.tools"
-              :key="tool.name"
-              class="tool-card"
-              @click="goToTool(tool.route)"
-            >
-              <div class="tool-icon">
-                <i :class="`bx ${tool.icon}`"></i>
-              </div>
-              <div class="tool-info">
-                <h3 class="tool-name">{{ tool.name }}</h3>
-                <p class="tool-desc">{{ tool.desc }}</p>
-              </div>
-              <div class="tool-arrow">
-                <i class="bx bx-chevron-right"></i>
-              </div>
+        <div class="tools-grid">
+          <div
+            v-for="tool in category.tools"
+            :key="tool.name"
+            class="tool-card"
+            @click="goToTool(tool.route)"
+          >
+            <div class="tool-icon">
+              <i :class="`bx ${tool.icon}`"></i>
+            </div>
+            <div class="tool-info">
+              <h3 class="tool-name">{{ tool.name }}</h3>
+              <p class="tool-desc">{{ tool.desc }}</p>
+            </div>
+            <div class="tool-arrow">
+              <i class="bx bx-chevron-right"></i>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- 모바일 오버레이 -->
-    <div 
-      v-if="isMobile && isMobileMenuOpen" 
-      class="mobile-overlay"
-      @click="isMobileMenuOpen = false"
-    ></div>
   </div>
 </template>
 
 <style scoped>
-.toolbox-container {
-  display: flex;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.toolbox-container.mobile {
-  flex-direction: column;
-}
-
-/* 사이드바 스타일 */
-.sidebar {
-  width: 260px;
-  min-width: 260px;
-  background: white;
-  border-right: 1px solid #e2e8f0;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  z-index: 1000;
-  overflow-y: auto;
-}
-
-.sidebar-header {
-  padding: 24px 24px 16px;
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.sidebar-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #1e293b;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.category-list {
-  padding: 16px 0;
-}
-
-.category-item {
-  display: flex;
-  align-items: center;
-  padding: 12px 24px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  position: relative;
-  gap: 12px;
-  min-height: 48px;
-}
-
-.category-item:hover {
-  background: #f1f5f9;
-}
-
-.category-item.active {
-  background: #3b82f6;
-  color: white;
-}
-
-.category-item.active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: #1d4ed8;
-}
-
-.category-item i {
-  font-size: 1.2rem;
-  width: 24px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-.category-item span {
-  flex: 1;
-  font-weight: 500;
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tool-count {
-  background: rgba(255, 255, 255, 0.2);
-  color: inherit;
-  padding: 2px 6px;
-  border-radius: 10px;
-  font-size: 0.7rem;
-  font-weight: 600;
-  min-width: 20px;
-  text-align: center;
-  flex-shrink: 0;
-}
-
-/* 컨텐츠 영역 */
-.content-area {
-  flex: 1;
-  margin-left: 260px;
-  padding: 0;
-  overflow-y: auto;
+.home-container {
+  width: 100%;
 }
 
 .content-header {
@@ -346,6 +224,47 @@ onUnmounted(() => {
 
 .category-section {
   margin-bottom: 48px;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 0 -20px 48px -20px;
+}
+
+.category-section.highlighted {
+  position: relative;
+  overflow: hidden;
+}
+
+.category-section.highlighted::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(139, 92, 246, 0.3) 100%);
+  animation: fadeBlink 1.5s ease-in-out;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: 12px;
+}
+
+@keyframes fadeBlink {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .category-header {
@@ -456,38 +375,6 @@ onUnmounted(() => {
   transform: translateX(4px);
 }
 
-/* 모바일 스타일 */
-.mobile-menu-toggle {
-  position: fixed;
-  top: 16px;
-  left: 16px;
-  z-index: 1001;
-}
-
-.sidebar.mobile-open {
-  transform: translateX(0);
-}
-
-.toolbox-container.mobile .sidebar {
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
-}
-
-.toolbox-container.mobile .content-area {
-  margin-left: 0;
-  padding-top: 80px;
-}
-
-.mobile-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
-
 /* 반응형 그리드 */
 @media (max-width: 1024px) {
   .tools-grid {
@@ -499,24 +386,24 @@ onUnmounted(() => {
   .content-header {
     padding: 24px 20px 20px;
   }
-  
+
   .main-title {
     font-size: 1.75rem;
   }
-  
+
   .categories-content {
     padding: 20px;
   }
-  
+
   .tools-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  
+
   .tool-card {
     padding: 20px;
   }
-  
+
   .category-title {
     font-size: 1.5rem;
   }
@@ -526,25 +413,25 @@ onUnmounted(() => {
   .content-header {
     padding: 20px 16px 16px;
   }
-  
+
   .main-title {
     font-size: 1.5rem;
   }
-  
+
   .categories-content {
     padding: 16px;
   }
-  
+
   .tool-card {
     padding: 16px;
     gap: 12px;
   }
-  
+
   .tool-icon {
     width: 40px;
     height: 40px;
   }
-  
+
   .tool-icon i {
     font-size: 1.25rem;
   }

@@ -6,7 +6,7 @@
       </el-button>
       <h1>Clipboard Manager</h1>
     </div>
-    
+
     <div class="clipboard-container">
       <div class="input-section">
         <h3>새 항목 추가</h3>
@@ -25,7 +25,7 @@
           </el-button>
         </div>
       </div>
-      
+
       <div class="clipboard-list">
         <h3>클립보드 기록 ({{ clipboardItems.length }}개)</h3>
         <div v-if="clipboardItems.length > 0" class="items-container">
@@ -77,12 +77,12 @@ const addItem = () => {
     ElMessage.warning('텍스트를 입력해주세요.')
     return
   }
-  
+
   const item = {
     text: newItem.value.trim(),
     timestamp: new Date().toISOString()
   }
-  
+
   clipboardItems.value.unshift(item)
   newItem.value = ''
   saveToStorage()
@@ -122,8 +122,6 @@ const saveToStorage = () => {
 
 <style scoped>
 .clipboard-manager {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 20px;
 }
 
@@ -234,28 +232,28 @@ const saveToStorage = () => {
   .clipboard-container {
     padding: 20px;
   }
-  
+
   .page-header h1 {
     font-size: 1.5rem;
   }
-  
+
   .action-buttons {
     flex-direction: column;
   }
-  
+
   .clipboard-item {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .item-content {
     margin-right: 0;
     margin-bottom: 10px;
     width: 100%;
   }
-  
+
   .item-actions {
     align-self: flex-end;
   }
 }
-</style> 
+</style>
