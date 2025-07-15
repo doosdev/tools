@@ -175,6 +175,7 @@ const clearInput = () => {
   margin: 0;
   white-space: pre-wrap;
   word-wrap: break-word;
+  line-height: 15px;
 }
 
 .placeholder {

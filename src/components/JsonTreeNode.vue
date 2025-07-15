@@ -1,5 +1,5 @@
 <template>
-  <div class="json-tree-node" :style="{ paddingLeft: 1 * 10 + 'px' }">
+  <div class="json-tree-node" :class="{ 'has-guide': level > 0 }" :style="{ paddingLeft: 1 * 10 + 'px' }">
     <div class="node-header" @click="toggleExpanded">
       <i 
         v-if="hasChildren" 
@@ -106,6 +106,17 @@ const getPreview = () => {
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 12px;
   line-height: 15px;
+  position: relative;
+}
+
+.json-tree-node.has-guide::before {
+  content: '---';
+  position: absolute;
+  left: -25px;
+  top: 0;
+  color: #ccc;
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .node-header {
@@ -113,7 +124,8 @@ const getPreview = () => {
   align-items: center;
   cursor: pointer;
   padding: 0;
-  height: 18px;
+  height: 18px;  
+  margin-left: -23px;
   transition: background-color 0.2s;
 }
 
@@ -132,7 +144,7 @@ const getPreview = () => {
 }
 
 .spacer {
-  width: 16px;
+  width: 1px;
   margin-right: 4px;
 }
 
@@ -175,6 +187,23 @@ const getPreview = () => {
 
 .node-children {
   margin-left: 10px;
+  position: relative;
+}
+
+.node-children::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: repeating-linear-gradient(
+    to bottom,
+    #ccc 0px,
+    #ccc 2px,
+    transparent 2px,
+    transparent 4px
+  );
 }
 
 @media (max-width: 768px) {
