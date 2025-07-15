@@ -301,10 +301,7 @@ const collapseAll = () => {
   justify-content: flex-end;
   gap: 8px;
 }
-
-.validation-status { 
-}
-
+ 
 @media (max-width: 768px) {
   .formatter-container {
     padding: 20px;
