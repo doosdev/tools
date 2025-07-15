@@ -7,7 +7,6 @@
           <el-button
             v-if="!isMobileMenuOpen"
             @click="toggleSidebar"
-            type="link"
             class="mobile-menu-btn"
           >
             <i class="bx bx-menu"></i>
@@ -16,7 +15,6 @@
           <el-button
             v-if="isMobileMenuOpen"
             @click="closeSidebar"
-            type="text"
             class="mobile-menu-btn"
           >
             <i class="bx bx-x"></i>
@@ -31,7 +29,6 @@
         <div class="mobile-header-right">
           <div class="mobile-header-right-item">
             <el-button
-              type="link"
               class="mobile-menu-btn"
             >
               <i class="bx bx-search" :style="{ opacity: 0 }"></i>
@@ -159,10 +156,20 @@ onUnmounted(() => {
 .mobile-menu-btn {
   font-size: 1.5rem;
   padding: 6px;
-  border: 0px;
+  border: none;
+  background: transparent;
+  color: #1e293b;
+  border-radius: 6px;
+  transition: all 0.2s ease;
 }
+
+.mobile-menu-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #3b82f6;
+}
+
 .mobile-menu-btn i {
-    margin-right: 0px;
+  margin-right: 0px;
 }
 
 
@@ -202,7 +209,7 @@ onUnmounted(() => {
 @media (max-width: 768px) {
   .main-content {
     margin-left: 0;
-    padding-top: 64px;
+    padding-top: 45px;
   }
 }
 </style>

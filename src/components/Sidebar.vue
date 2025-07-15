@@ -2,7 +2,7 @@
   <div class="sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
     <div class="sidebar-header">
       <h2 class="sidebar-title">
-        Dev. Toolbox
+        TOOLS CATEGORY
       </h2>
     </div>
     <div class="category-list">
