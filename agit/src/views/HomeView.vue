@@ -7,7 +7,12 @@ const router = useRouter()
 
 // 도구 클릭 핸들러
 const goToTool = (route) => {
-  router.push(route)
+  // route 에 http 포함이면 새창으로 이동
+  if (route.includes('http')) {
+    window.open(route, '_blank')
+  } else {
+    router.push(route)
+  }
 }
 
 // 하이라이트 관련 상태

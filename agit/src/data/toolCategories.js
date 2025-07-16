@@ -79,25 +79,31 @@ export const toolCategories = [
         name: 'ChatGPT',
         desc: 'ChatGPT 챗봇',
         icon: 'bx-brain',
-        route: '/chatgpt',
+        route: 'https://chatgpt.com',
       },
       {
         name: 'Claude',
         desc: 'Claude 챗봇',
         icon: 'bx-brain',
-        route: '/claude',
+        route: 'https://claude.ai',
       },
       {
         name: 'Gemini',
         desc: 'Gemini 챗봇',
         icon: 'bx-brain',
-        route: '/gemini',
+        route: 'https://gemini.google.com',
+      },
+      {
+        name: 'Grok',
+        desc: 'Grok 챗봇',
+        icon: 'bx-brain',
+        route: 'https://grok.com',
       },
       {
         name: 'Poe',
         desc: 'Poe 챗봇',
         icon: 'bx-brain',
-        route: '/poe',
+        route: 'https://poe.com',
       },
     ]
   }
