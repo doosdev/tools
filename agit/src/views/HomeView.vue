@@ -1,82 +1,9 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { toolCategories } from '../data/toolCategories.js'
 
 const router = useRouter()
-
-// 카테고리별로 그룹핑된 도구들
-const toolCategories = [
-  {
-    id: 'data-processing',
-    name: '데이터 처리',
-    icon: 'bx-data',
-    tools: [
-      {
-        name: 'JSON Formatter',
-        desc: 'JSON 데이터를 정렬/검증',
-        icon: 'bx-code-block',
-        route: '/json-formatter',
-      },
-      {
-        name: 'Base64 Encoder/Decoder',
-        desc: 'Base64 인코딩/디코딩',
-        icon: 'bx-lock-alt',
-        route: '/base64',
-      },
-      {
-        name: 'URL Encoder/Decoder',
-        desc: 'URL 인코딩/디코딩',
-        icon: 'bx-link',
-        route: '/url-encoder',
-      },
-    ]
-  },
-  {
-    id: 'text-tools',
-    name: '텍스트 도구',
-    icon: 'bx-text',
-    tools: [
-      {
-        name: 'Regex Tester',
-        desc: '정규표현식 테스트 및 디버깅',
-        icon: 'bx-merge',
-        route: '/regex-tester',
-      },
-      {
-        name: 'Diff Checker',
-        desc: '두 텍스트/코드의 차이 비교',
-        icon: 'bx-candles',
-        route: '/diff-checker',
-      },
-    ]
-  },
-  {
-    id: 'converters',
-    name: '포맷 변환',
-    icon: 'bx-transfer',
-    tools: [
-      {
-        name: 'Online Converters',
-        desc: 'XML, CSV 등 다양한 포맷 변환',
-        icon: 'bx-transfer',
-        route: '/converters',
-      },
-    ]
-  },
-  {
-    id: 'productivity',
-    name: '생산성 도구',
-    icon: 'bx-briefcase',
-    tools: [
-      {
-        name: 'Clipboard Manager',
-        desc: '복사/붙여넣기 기록 관리',
-        icon: 'bx-clipboard',
-        route: '/clipboard',
-      },
-    ]
-  }
-]
 
 // 도구 클릭 핸들러
 const goToTool = (route) => {

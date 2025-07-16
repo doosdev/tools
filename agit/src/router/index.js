@@ -44,6 +44,26 @@ const router = createRouter({
       name: 'clipboard',
       component: () => import('../views/ClipboardView.vue'),
     },
+    {
+      path: '/chatgpt',
+      name: 'chatgpt',
+      component: () => import('../views/ChatGPTView.vue'),
+    },
+    {
+      path: '/claude',
+      name: 'claude',
+      component: () => import('../views/ClaudeView.vue'),
+    },
+    {
+      path: '/gemini',
+      name: 'gemini',
+      component: () => import('../views/GeminiView.vue'),
+    },
+    {
+      path: '/poe',
+      name: 'poe',
+      component: () => import('../views/PoeView.vue'),
+    },
   ],
 })
 

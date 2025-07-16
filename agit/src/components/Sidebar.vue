@@ -2,7 +2,7 @@
   <div class="sidebar" :class="{ 'mobile-open': isMobileMenuOpen }">
     <div class="sidebar-header">
       <h2 class="sidebar-title">
-        TOOLS CATEGORY
+        CATEGORY
       </h2>
     </div>
     <div class="category-list">
@@ -24,6 +24,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, inject } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { toolCategories, findCategoryByRoute } from '../data/toolCategories.js'
 
 const router = useRouter()
 const route = useRoute()
@@ -39,80 +40,6 @@ const props = defineProps({
 // emit 정의
 const emit = defineEmits(['close-mobile-menu'])
 
-// 카테고리별로 그룹핑된 도구들
-const toolCategories = [
-  {
-    id: 'data-processing',
-    name: '데이터 처리',
-    icon: 'bx-data',
-    tools: [
-      {
-        name: 'JSON Formatter',
-        desc: 'JSON 데이터를 정렬/검증',
-        icon: 'bx-code-block',
-        route: '/json-formatter',
-      },
-      {
-        name: 'Base64 Encoder/Decoder',
-        desc: 'Base64 인코딩/디코딩',
-        icon: 'bx-lock-alt',
-        route: '/base64',
-      },
-      {
-        name: 'URL Encoder/Decoder',
-        desc: 'URL 인코딩/디코딩',
-        icon: 'bx-link',
-        route: '/url-encoder',
-      },
-    ]
-  },
-  {
-    id: 'text-tools',
-    name: '텍스트 도구',
-    icon: 'bx-text',
-    tools: [
-      {
-        name: 'Regex Tester',
-        desc: '정규표현식 테스트 및 디버깅',
-        icon: 'bx-merge',
-        route: '/regex-tester',
-      },
-      {
-        name: 'Diff Checker',
-        desc: '두 텍스트/코드의 차이 비교',
-        icon: 'bx-candles',
-        route: '/diff-checker',
-      },
-    ]
-  },
-  {
-    id: 'converters',
-    name: '포맷 변환',
-    icon: 'bx-transfer',
-    tools: [
-      {
-        name: 'Online Converters',
-        desc: 'XML, CSV 등 다양한 포맷 변환',
-        icon: 'bx-transfer',
-        route: '/converters',
-      },
-    ]
-  },
-  {
-    id: 'productivity',
-    name: '생산성 도구',
-    icon: 'bx-briefcase',
-    tools: [
-      {
-        name: 'Clipboard Manager',
-        desc: '복사/붙여넣기 기록 관리',
-        icon: 'bx-clipboard',
-        route: '/clipboard',
-      },
-    ]
-  }
-]
-
 const activeCategory = ref('data-processing')
 const isMobile = ref(false)
 const isMobileMenuOpen = ref(false)
@@ -120,11 +47,9 @@ const isMobileMenuOpen = ref(false)
 // 현재 라우트에 따른 활성 카테고리 설정
 const setActiveCategoryFromRoute = () => {
   const currentRoute = route.path
-  for (const category of toolCategories) {
-    if (category.tools.some(tool => tool.route === currentRoute)) {
-      activeCategory.value = category.id
-      break
-    }
+  const category = findCategoryByRoute(currentRoute)
+  if (category) {
+    activeCategory.value = category.id
   }
 }
 
