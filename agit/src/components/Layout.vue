@@ -165,7 +165,7 @@ onUnmounted(() => {
 
 .mobile-menu-btn:hover {
   background: rgba(0, 0, 0, 0.05);
-  color: #3b82f6;
+  color: #05093b;
 }
 
 .mobile-menu-btn i {

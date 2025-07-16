@@ -301,7 +301,7 @@ defineExpose({
 }
 
 .category-item.active {
-  background: #3b82f6;
+  background: #05093b;
   color: white;
 }
 

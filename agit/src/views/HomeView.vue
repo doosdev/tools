@@ -316,7 +316,7 @@ defineExpose({
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(90deg, #05093b, #8b5cf6);
   transform: scaleX(0);
   transition: transform 0.3s ease;
 }
@@ -324,7 +324,7 @@ defineExpose({
 .tool-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-  border-color: #3b82f6;
+  border-color: #05093b;
 }
 
 .tool-card:hover::before {
@@ -334,7 +334,7 @@ defineExpose({
 .tool-icon {
   width: 48px;
   height: 48px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(135deg, #05093b, #8b5cf6);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -371,7 +371,7 @@ defineExpose({
 }
 
 .tool-card:hover .tool-arrow {
-  color: #3b82f6;
+  color: #05093b;
   transform: translateX(4px);
 }
 
