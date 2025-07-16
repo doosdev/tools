@@ -149,7 +149,7 @@ defineExpose({
 <template>
   <div class="home-container">
     <div class="content-header">
-      <h1 class="main-title">DOO 개발자 도구</h1>
+      <h1 class="main-title">DOO Dev. Collection <span class="sub-logo">픞</span></h1>
       <p class="subtitle">개발에 필요한 도구/기술 들을 정리했습니다</p>
     </div>
 
@@ -193,6 +193,7 @@ defineExpose({
 </template>
 
 <style scoped>
+
 .home-container {
   width: 100%;
 }
@@ -203,7 +204,17 @@ defineExpose({
   border-bottom: 1px solid #e2e8f0;
   text-align: center;
 }
-
+.sub-logo {
+    background: #000;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    width: 42px;
+    height: 42px;
+    line-height: 37px;
+    vertical-align: initial;
+    padding: 1px;
+}
 .main-title {
   font-size: 2.5rem;
   font-weight: 700;
@@ -386,6 +397,17 @@ defineExpose({
   .content-header {
     padding: 24px 20px 20px;
   }
+  .sub-logo {
+    background: #000;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    width: 33px;
+    height: 33px;
+    line-height: 32px;
+    vertical-align: top;
+    padding: 1px;
+  }
 
   .main-title {
     font-size: 1.75rem;
@@ -414,6 +436,17 @@ defineExpose({
     padding: 20px 16px 16px;
   }
 
+  .sub-logo {
+    background: #000;
+    border-radius: 3px;
+    color: #fff;
+    display: inline-block;
+    width: 33px;
+    height: 33px;
+    line-height: 32px;
+    vertical-align: middle;
+    padding: 1px;
+  }
   .main-title {
     font-size: 1.5rem;
   }
