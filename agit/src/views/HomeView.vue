@@ -149,8 +149,8 @@ defineExpose({
 <template>
   <div class="home-container">
     <div class="content-header">
-      <h1 class="main-title">개발자 유틸리티 툴박스</h1>
-      <p class="subtitle">개발에 필요한 다양한 도구들을 카테고리별로 정리했습니다</p>
+      <h1 class="main-title">DOO 개발자 도구</h1>
+      <p class="subtitle">개발에 필요한 도구/기술 들을 정리했습니다</p>
     </div>
 
     <div class="categories-content">

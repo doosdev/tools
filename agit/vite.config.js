@@ -30,7 +30,7 @@ export default defineConfig({
         name: 'Doo ToolBox',
         short_name: 'Doo Tools',
         description: '개발자를 위한 유틸리티 툴 모음',
-        theme_color: '#409eff',
+        theme_color: '#05093b',
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait',
