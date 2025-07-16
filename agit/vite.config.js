@@ -10,6 +10,10 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
+  build: {
+    outDir: '../',
+    emptyOutDir: false,
+  },
   plugins: [
     vue(),
     vueDevTools(),
@@ -23,8 +27,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'Developer ToolBox',
-        short_name: 'ToolBox',
+        name: 'Doo ToolBox',
+        short_name: 'Doo Tools',
         description: '개발자를 위한 유틸리티 툴 모음',
         theme_color: '#409eff',
         background_color: '#ffffff',
