@@ -1,11 +1,10 @@
 <template>
   <div class="clipboard-manager">
-    <div class="page-header">
-      <el-button @click="$router.push('/')" link class="back-btn">
-        <i class="bx bx-arrow-back"></i> 뒤로가기
-      </el-button>
-      <h1>Clipboard Manager</h1>
-    </div>
+    <PageHeader 
+      title="Clipboard Manager" 
+      back-text="뒤로가기"
+      :show-back-text="false"
+    />
 
     <div class="clipboard-container">
       <div class="input-section">
@@ -60,6 +59,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
+import PageHeader from '../components/PageHeader.vue'
 
 const newItem = ref('')
 const clipboardItems = ref([])
@@ -125,22 +125,7 @@ const saveToStorage = () => {
   padding: 20px;
 }
 
-.page-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
-  gap: 20px;
-}
 
-.back-btn {
-  font-size: 16px;
-}
-
-.page-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 600;
-}
 
 .clipboard-container {
   background: #fff;

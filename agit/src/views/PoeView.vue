@@ -1,10 +1,8 @@
 <template>
   <div class="poe-container">
+    <PageHeader title="Poe" />
+    
     <div class="content-header">
-      <h1 class="page-title">
-        <i class="bx bx-brain"></i>
-        Poe
-      </h1>
       <p class="page-description">Quora의 Poe AI 챗봇 플랫폼</p>
     </div>
 
@@ -55,6 +53,7 @@
 
 <script setup>
 import { ref, nextTick, onMounted } from 'vue'
+import PageHeader from '../components/PageHeader.vue'
 
 const messages = ref([
   {
@@ -141,16 +140,7 @@ onMounted(() => {
   margin-bottom: 32px;
 }
 
-.page-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin: 0 0 8px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
+
 
 .page-description {
   font-size: 1.1rem;

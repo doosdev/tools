@@ -1,11 +1,10 @@
 <template>
   <div class="json-formatter">
-    <div class="page-header">
-      <el-button @click="$router.push('/')" link class="back-btn">
-        <i class="bx bx-arrow-back"></i> 뒤로가기
-      </el-button>
-      <h1>JSON Formatter & Validator</h1>
-    </div>
+    <PageHeader 
+      title="JSON Formatter & Validator" 
+      back-text="뒤로가기"
+      :show-back-text="false"
+    />
     
     <div class="formatter-container">
       <el-row :gutter="20">
@@ -115,6 +114,7 @@
 import { ref, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import JsonTreeNode from '../components/JsonTreeNode.vue'
+import PageHeader from '../components/PageHeader.vue'
 
 const inputJson = ref('')
 const formattedJson = ref('')
@@ -279,22 +279,7 @@ const handleCommand = (command) => {
   padding: 20px;
 }
 
-.page-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
-  gap: 20px;
-}
 
-.back-btn {
-  font-size: 16px;
-}
-
-.page-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 600;
-}
 
 .formatter-container {
   background: #fff;

@@ -81,7 +81,7 @@ defineExpose({
 <template>
   <div class="home-container">
     <div class="content-header">
-      <h1 class="main-title">DOO Dev. Collection <span class="sub-logo">픞</span></h1>
+      <h1 class="main-title">Doo Dev. Collection <span class="sub-logo">픞</span></h1>
       <p class="subtitle">개발에 필요한 도구/기술 들을 정리했습니다</p>
     </div>
 

@@ -1,11 +1,10 @@
 <template>
   <div class="diff-checker">
-    <div class="page-header">
-      <el-button @click="$router.push('/')" link class="back-btn">
-        <i class="bx bx-arrow-back"></i> 뒤로가기
-      </el-button>
-      <h1>Diff Checker</h1>
-    </div>
+    <PageHeader 
+      title="Diff Checker" 
+      back-text="뒤로가기"
+      :show-back-text="false"
+    />
     
     <div class="diff-container">
       <el-row :gutter="20">
@@ -55,6 +54,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import PageHeader from '../components/PageHeader.vue'
 
 const textA = ref('')
 const textB = ref('')
@@ -108,22 +108,7 @@ const getDiffClass = (line) => {
   padding: 20px;
 }
 
-.page-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
-  gap: 20px;
-}
 
-.back-btn {
-  font-size: 16px;
-}
-
-.page-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 600;
-}
 
 .diff-container {
   background: #fff;

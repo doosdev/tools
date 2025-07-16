@@ -1,11 +1,10 @@
 <template>
   <div class="url-encoder">
-    <div class="page-header">
-      <el-button @click="$router.push('/')" link class="back-btn">
-        <i class="bx bx-arrow-back"></i> 뒤로가기
-      </el-button>
-      <h1>URL Encoder/Decoder</h1>
-    </div>
+    <PageHeader 
+      title="URL Encoder/Decoder" 
+      back-text="뒤로가기"
+      :show-back-text="false"
+    />
     
     <div class="tool-container">
       <el-row :gutter="20">
@@ -54,6 +53,7 @@
 <script setup>
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
+import PageHeader from '../components/PageHeader.vue'
 
 const inputText = ref('')
 const outputText = ref('')
@@ -108,22 +108,7 @@ const copyToClipboard = async () => {
   padding: 20px;
 }
 
-.page-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
-  gap: 20px;
-}
 
-.back-btn {
-  font-size: 16px;
-}
-
-.page-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  font-weight: 600;
-}
 
 .tool-container {
   background: #fff;

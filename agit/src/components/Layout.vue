@@ -108,7 +108,7 @@ onUnmounted(() => {
 .layout-container {
   display: flex;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: linear-gradient(151deg, #e5e5e5 0%, #dfdfdf00 100%);
 }
 
 .layout-container.mobile {

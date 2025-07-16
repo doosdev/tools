@@ -1,11 +1,10 @@
 <template>
   <div class="regex-tester">
-    <div class="page-header">
-      <el-button @click="$router.push('/')" link class="back-btn">
-        <i class="bx bx bx-arrow-back"></i> 뒤로가기
-      </el-button>
-      <h1>Regex Tester</h1>
-    </div>
+    <PageHeader 
+      title="Regex Tester" 
+      back-text="뒤로가기"
+      :show-back-text="false"
+    />
     
     <div class="tester-container">
       <el-tabs v-model="activeTab" type="border-card" class="regex-tabs">
@@ -121,6 +120,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import PageHeader from '../components/PageHeader.vue'
 
 const activeTab = ref('tester')
 const regexPattern = ref('')
