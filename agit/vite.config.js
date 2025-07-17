@@ -24,7 +24,7 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
         name: 'Doo ToolBox',
