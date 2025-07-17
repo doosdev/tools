@@ -24,7 +24,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { registerSW } from 'virtual:pwa-register'
 import { ElMessage } from 'element-plus'
 import { Refresh } from '@element-plus/icons-vue'
 
