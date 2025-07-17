@@ -1,5 +1,5 @@
 <template>
-  <div class="poe-container">
+  <div class="poe-container content-wrapper">
     <PageHeader title="Poe" />
     
     <div class="content-header">

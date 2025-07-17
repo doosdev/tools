@@ -1,12 +1,12 @@
 <template>
-  <div class="url-encoder">
+  <div class="url-encoder content-wrapper">
     <PageHeader 
       title="URL Encoder/Decoder" 
       back-text="뒤로가기"
       :show-back-text="false"
     />
     
-    <div class="tool-container">
+    <div class="tool-container content-body">
       <el-row :gutter="20">
         <el-col :span="12">
           <div class="input-section">

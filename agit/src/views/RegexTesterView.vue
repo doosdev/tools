@@ -1,12 +1,12 @@
 <template>
-  <div class="regex-tester">
+  <div class="regex-tester content-wrapper">
     <PageHeader 
       title="Regex Tester" 
       back-text="뒤로가기"
       :show-back-text="false"
     />
     
-    <div class="tester-container">
+    <div class="tester-container content-body">
       <el-tabs v-model="activeTab" type="border-card" class="regex-tabs">
         <el-tab-pane label="정규식 테스터" name="tester">
           <el-row :gutter="20">

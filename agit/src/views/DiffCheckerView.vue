@@ -1,12 +1,12 @@
 <template>
-  <div class="diff-checker">
+  <div class="diff-checker content-wrapper">
     <PageHeader 
       title="Diff Checker" 
       back-text="뒤로가기"
       :show-back-text="false"
     />
     
-    <div class="diff-container">
+    <div class="diff-container content-body">
       <el-row :gutter="20">
         <el-col :span="12">
           <div class="text-section">

@@ -1,12 +1,12 @@
 <template>
-  <div class="json-formatter">
+  <div class="json-formatter content-wrapper">
     <PageHeader 
       title="JSON Formatter & Validator" 
       back-text="뒤로가기"
       :show-back-text="false"
     />
     
-    <div class="formatter-container">
+    <div class="formatter-container content-body">
       <el-row :gutter="20">
         <el-col :span="12">
           <div class="input-section">

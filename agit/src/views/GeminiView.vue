@@ -1,5 +1,5 @@
 <template>
-  <div class="gemini-container">
+  <div class="gemini-container content-wrapper">
     <PageHeader title="Gemini" />
     
     <div class="content-header">

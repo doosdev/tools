@@ -1,8 +1,8 @@
 <template>
-  <div class="base64-tool">
+  <div class="base64-tool content-wrapper">
     <PageHeader title="Base64 Encoder/Decoder" />
     
-    <div class="tool-container">
+    <div class="tool-container content-body">
       <el-row :gutter="20">
         <el-col :span="12">
           <div class="input-section">

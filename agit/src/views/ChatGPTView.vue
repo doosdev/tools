@@ -1,12 +1,12 @@
 <template>
-  <div class="chatgpt-container">
+  <div class="chatgpt-container content-wrapper">
     <PageHeader title="ChatGPT" />
     
     <div class="content-header">
       <p class="page-description">OpenAI의 ChatGPT 챗봇 서비스</p>
     </div>
 
-    <div class="content-body">
+    <div class="tool-container content-body">
       <el-card class="chat-card">
         <div class="chat-interface">
           <div class="chat-messages" ref="messagesContainer">

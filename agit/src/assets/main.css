@@ -40,3 +40,6 @@ a,
 .page-header > div {
   display: flex;
 }
+.content-body {
+  min-height: calc(100vh - 120px);
+}

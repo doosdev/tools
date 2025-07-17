@@ -1,12 +1,12 @@
 <template>
-  <div class="converters">
+  <div class="converters content-wrapper">
     <PageHeader 
       title="Online Converters" 
       back-text="뒤로가기"
       :show-back-text="false"
     />
     
-    <div class="converter-container">
+    <div class="converter-container content-body">
       <el-tabs v-model="activeTab" type="border-card">
         <el-tab-pane label="XML to JSON" name="xml-to-json">
           <div class="converter-content">

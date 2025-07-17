@@ -1,12 +1,12 @@
 <template>
-  <div class="claude-container">
+  <div class="claude-container content-wrapper">
     <PageHeader title="Claude" />
     
     <div class="content-header">
       <p class="page-description">Anthropic의 Claude AI 챗봇 서비스</p>
     </div>
 
-    <div class="content-body">
+    <div class="tool-container content-body">
       <el-card class="chat-card">
         <div class="chat-interface">
           <div class="chat-messages" ref="messagesContainer">
