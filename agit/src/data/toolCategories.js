@@ -71,6 +71,43 @@ export const toolCategories = [
     ]
   },
   {
+    id: 'artificial-intelligence',
+    name: 'AI Chat',
+    icon: 'bx-brain',
+    tools: [
+      {
+        name: 'ChatGPT',
+        desc: 'ChatGPT 챗봇',
+        icon: 'bx-brain',
+        route: 'https://chatgpt.com',
+      },
+      {
+        name: 'Claude',
+        desc: 'Claude 챗봇',
+        icon: 'bx-brain',
+        route: 'https://claude.ai',
+      },
+      {
+        name: 'Gemini',
+        desc: 'Gemini 챗봇',
+        icon: 'bx-brain',
+        route: 'https://gemini.google.com',
+      },
+      {
+        name: 'Grok',
+        desc: 'Grok 챗봇',
+        icon: 'bx-brain',
+        route: 'https://grok.com',
+      },
+      {
+        name: 'Poe',
+        desc: 'Poe 챗봇',
+        icon: 'bx-brain',
+        route: 'https://poe.com',
+      },
+    ]
+  },
+  {
     id: 'AI-IDE',
     name: 'AI IDE',
     icon: 'bx-code',
@@ -108,43 +145,6 @@ export const toolCategories = [
 
     ]
 
-  },
-  {
-    id: 'artificial-intelligence',
-    name: 'AI 도구',
-    icon: 'bx-brain',
-    tools: [
-      {
-        name: 'ChatGPT',
-        desc: 'ChatGPT 챗봇',
-        icon: 'bx-brain',
-        route: 'https://chatgpt.com',
-      },
-      {
-        name: 'Claude',
-        desc: 'Claude 챗봇',
-        icon: 'bx-brain',
-        route: 'https://claude.ai',
-      },
-      {
-        name: 'Gemini',
-        desc: 'Gemini 챗봇',
-        icon: 'bx-brain',
-        route: 'https://gemini.google.com',
-      },
-      {
-        name: 'Grok',
-        desc: 'Grok 챗봇',
-        icon: 'bx-brain',
-        route: 'https://grok.com',
-      },
-      {
-        name: 'Poe',
-        desc: 'Poe 챗봇',
-        icon: 'bx-brain',
-        route: 'https://poe.com',
-      },
-    ]
   }
 ]
 
