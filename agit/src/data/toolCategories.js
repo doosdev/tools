@@ -114,31 +114,38 @@ export const toolCategories = [
     tools: [
       {
         name: 'Cursor',
-        desc: 'AI 기반 코드 편집기',
+        desc: '$0 / $20 / $200',
         icon: 'bx-code',
         route: 'https://cursor.com',
       },
       {
         name: 'Trae',
-        desc: 'Trae AI',
+        desc: '$0 / $10',
         icon: 'bx-code',
         route: 'https://trae.ai',
       },
       {
         name: 'Claude Code',
-        desc: 'Claude Code',
+        desc: '$0 / $17 / $100^',
         icon: 'bx-code',
         route: 'https://www.anthropic.com/pricing',
       },
       {
+        name: 'Warp',
+        desc: '$15 / $40 / $55 / $200',
+        icon: 'bx-code',
+        route: 'https://www.warp.dev',
+      },
+      {
         name: 'Windsurf',
-        desc: 'Windsurf',
+        desc: '$0 / $15 / $30 / $60',
+
         icon: 'bx-code',
         route: 'https://windsurf.com',
       },
       {
         name: 'Kiro',
-        desc: 'Codeium',
+        desc: '$0 / $20 / $40 / $200',
         icon: 'bx-code',
         route: 'https://kiro.dev',
       }, 
