@@ -71,6 +71,45 @@ export const toolCategories = [
     ]
   },
   {
+    id: 'AI-IDE',
+    name: 'AI IDE',
+    icon: 'bx-code',
+    tools: [
+      {
+        name: 'Cursor',
+        desc: 'AI 기반 코드 편집기',
+        icon: 'bx-code',
+        route: 'https://cursor.com',
+      },
+      {
+        name: 'Trae',
+        desc: 'Trae AI',
+        icon: 'bx-code',
+        route: 'https://trae.ai',
+      },
+      {
+        name: 'Claude Code',
+        desc: 'Claude Code',
+        icon: 'bx-code',
+        route: 'https://www.anthropic.com/pricing',
+      },
+      {
+        name: 'Windsurf',
+        desc: 'Windsurf',
+        icon: 'bx-code',
+        route: 'https://windsurf.com',
+      },
+      {
+        name: 'Kiro',
+        desc: 'Codeium',
+        icon: 'bx-code',
+        route: 'https://kiro.dev',
+      }, 
+
+    ]
+
+  },
+  {
     id: 'artificial-intelligence',
     name: 'AI 도구',
     icon: 'bx-brain',
